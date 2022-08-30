@@ -1,8 +1,9 @@
 const express = require("express");
 const connectDB = require("./db");
 const app = express();
+const authenticate = require("./middleware/authenticate");
 app.use(express.json());
-const authenticate =  require('./middleware/authenticate')
+
 
 
 
@@ -11,9 +12,6 @@ app.get("/private", authenticate, async(req, res) => {
   console.log('You are ',req.user)
   return res.status(200).json({ message: "I am private route"});
 });
-
-
-
 
 
 
@@ -26,7 +24,7 @@ app.get("/", (_req, res) => {
 });
 
 // global error handler 
-app.use((err, req, res, next) => {
+app.use((err, _req, res, _next) => {
   console.log(err);
   res.status(500).json({ message: "Server Error Occured!" });
 });

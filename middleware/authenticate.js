@@ -7,7 +7,6 @@ async function authenticate(req, res, next) {
     if (!authorizationToken) {
       return res.status(401).json({ message: "Unauthorized" });
     }
-
     const bearerToken = authorizationToken.split(" ")[1];
     const decodedUser = jwt.verify(bearerToken, "secret-key");
     const user = await User.findById(decodedUser._id);
@@ -21,7 +20,4 @@ async function authenticate(req, res, next) {
     return res.status(401).json({ message: "Invalid Token" });
   }
 }
-
-
-
 module.exports = authenticate;
